@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jantar de Posse de Pe. Henrique Gustavo</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="app-panel">
+        <header class="page-header">
+          <img class="page-logo" src="/logo.png" alt="Paróquia de Nossa Senhora da Guia">
+          <h1>Jantar de Posse<br>Pe. Henrique Gustavo</h1>
+          <p>Paróquia Nossa Senhora da Guia<br>Queimadas-PB</p>
+        </header>
+
+        <div class="tabs" role="tablist" aria-label="Acesso ao sistema">
+          <button class="tab-button active" id="tab-login" type="button" role="tab" aria-selected="true" aria-controls="login-panel">Login</button>
+          <button class="tab-button" id="tab-cadastro" type="button" role="tab" aria-selected="false" aria-controls="cadastro-panel">Registro</button>
+        </div>
+
+        <form class="panel active" id="login-panel" role="tabpanel" aria-labelledby="tab-login">
+          <div class="form-grid">
+            <label>
+              <span>WhatsApp</span>
+              <input id="login-telefone" name="telefone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="11" pattern="[0-9]*" placeholder="83999999999" required>
+            </label>
+
+            <label>
+              <span>Data de Nascimento</span>
+              <input id="login-data-nascimento" name="dataNascimento" type="text" inputmode="numeric" maxlength="11" placeholder="01012000" required>
+            </label>
+          </div>
+
+          <p class="login-note">Para resgatar o seu QR Code, basta realizar o login. O usuário é o seu número de WhatsApp, e a senha é a sua data de nascimento.</p>
+          <button class="primary-button" type="submit">Entrar</button>
+          <p class="status-message" id="login-status" aria-live="polite"></p>
+          <div class="credential hidden" id="credential-card"></div>
+        </form>
+
+        <form class="panel" id="cadastro-panel" role="tabpanel" aria-labelledby="tab-cadastro">
+          <div class="form-grid">
+            <label>
+              <span>Nome completo</span>
+              <input id="nome-completo" name="nomeCompleto" type="text" autocomplete="name" required>
+            </label>
+
+            <label>
+              <span>WhatsApp</span>
+              <input id="telefone" name="telefone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="11" pattern="[0-9]*" placeholder="83999999999" required>
+            </label>
+
+            <label>
+              <span>Data de nascimento</span>
+              <input id="data-nascimento" name="dataNascimento" type="text" inputmode="numeric" maxlength="8" placeholder="01012000" required>
+            </label>
+
+          </div>
+
+          <p class="form-note">Este jantar é dedicado aos paroquianos de Pe. Henrique Gustavo que percorreram uma longa estrada para chegar a Queimadas para a sua missa de posse.</p>
+          <button class="primary-button" id="salvar-button" type="submit">Salvar</button>
+          <p class="status-message" id="cadastro-status" aria-live="polite"></p>
+        </form>
+
+        <section class="panel dashboard-panel hidden" id="dashboard-panel" aria-label="Tela de acesso">
+          <div class="dashboard-top">
+            <div>
+              <span id="dashboard-profile">Acesso</span>
+              <h2 id="dashboard-title">Tela de acesso</h2>
+            </div>
+            <button class="secondary-button compact-button" id="back-login-button" type="button">Sair</button>
+          </div>
+
+          <div class="credential" id="dashboard-user-card"></div>
+
+          <div class="dashboard-tabs hidden" id="exclusive-tabs" role="tablist" aria-label="Acoes do perfil exclusivo">
+            <button class="dashboard-tab active" id="tab-painel-checkin" type="button" data-dashboard-tab="checkin">Check in</button>
+            <button class="dashboard-tab" id="tab-usuarios" type="button" data-dashboard-tab="usuarios">Usuarios cadastrados</button>
+            <button class="dashboard-tab" id="tab-cadastrar-checkin" type="button" data-dashboard-tab="cadastrar-checkin">Cadastrar Equipe de Check in</button>
+            <button class="dashboard-tab" id="tab-configuracoes" type="button" data-dashboard-tab="configuracoes">Configuracoes</button>
+          </div>
+
+          <section class="checkin-area dashboard-section hidden" id="checkin-area" data-dashboard-section="checkin" aria-label="Check in">
+            <div class="admin-heading">
+              <h2>Leitor de QR Code</h2>
+            </div>
+            <div class="scanner-box">
+              <div id="scanner-reader"></div>
+              <p id="scanner-help">Abra a camera e aponte para o QR Code do visitante.</p>
+            </div>
+            <button class="secondary-button" id="start-scanner-button" type="button">Abrir camera</button>
+            <div class="manual-checkin">
+              <label>
+                <span>Codigo ou telefone</span>
+                <input id="manual-code" type="text" inputmode="text" maxlength="11" placeholder="A7B3K ou 83999999999">
+              </label>
+              <button class="primary-button" id="manual-checkin-button" type="button">Validar</button>
+            </div>
+            <p class="status-message" id="checkin-status" aria-live="polite"></p>
+          </section>
+
+          <section class="admin-area dashboard-section hidden" id="admin-area" data-dashboard-section="usuarios" aria-label="Usuarios cadastrados">
+            <div class="admin-heading">
+              <h2>Usuarios cadastrados</h2>
+              <span id="admin-total">0</span>
+            </div>
+            <div class="user-cards" id="user-cards"></div>
+          </section>
+
+          <section class="team-area dashboard-section hidden" id="team-area" data-dashboard-section="cadastrar-checkin" aria-label="Cadastrar equipe de check in">
+            <div class="admin-heading">
+              <h2>Cadastrar Equipe de Check in</h2>
+            </div>
+            <form id="team-checkin-form" class="form-grid">
+              <label>
+                <span>Telefone</span>
+                <input id="team-telefone" name="telefone" type="tel" inputmode="numeric" maxlength="11" pattern="[0-9]*" placeholder="83999999999" required>
+              </label>
+
+              <label>
+                <span>Data de nascimento</span>
+                <input id="team-data-nascimento" name="dataNascimento" type="text" inputmode="numeric" maxlength="8" placeholder="01012000" required>
+              </label>
+
+              <button class="primary-button" id="team-save-button" type="submit">Cadastrar</button>
+              <p class="status-message" id="team-status" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <section class="settings-area dashboard-section hidden" id="settings-area" data-dashboard-section="configuracoes" aria-label="Configuracoes">
+            <div class="admin-heading">
+              <h2>Configuracoes</h2>
+            </div>
+            <div class="settings-list">
+              <div>
+                <span>Evento</span>
+                <strong>Jantar de Posse - Pe. Henrique Gustavo</strong>
+              </div>
+              <div>
+                <span>Check in</span>
+                <strong>QR Code, codigo ou telefone</strong>
+              </div>
+              <div>
+                <span>Banco de dados</span>
+                <strong>Supabase</strong>
+              </div>
+              <label class="settings-toggle">
+                <input id="toggle-registros-encerrados" type="checkbox">
+                <span>Parar de receber registro</span>
+              </label>
+              <p class="status-message" id="settings-status" aria-live="polite"></p>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <footer class="site-footer">
+        <span>Desenvolvido por Orestes Neto</span>
+        <a href="https://wa.me/5583996552101" target="_blank" rel="noopener noreferrer">Contato WhatsApp: (83) 99655-2101</a>
+      </footer>
+    </main>
+
+    <div class="modal-backdrop hidden" id="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qr-modal-title">
+      <div class="modal-card qr-modal-card">
+        <button class="modal-close" type="button" data-close-modal="qr-modal" aria-label="Fechar">x</button>
+        <h2 id="qr-modal-title">Seu QR Code</h2>
+        <p>Apresente este codigo na entrada do evento.</p>
+        <img id="qr-modal-img" alt="QR Code do visitante">
+        <strong id="qr-modal-code"></strong>
+        <a class="primary-button qr-whatsapp-button hidden" id="qr-whatsapp-button" href="#" target="_blank" rel="noopener noreferrer">Enviar para o meu WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="modal-backdrop hidden" id="checkin-modal" role="dialog" aria-modal="true" aria-labelledby="checkin-modal-title">
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-close-modal="checkin-modal" aria-label="Fechar">x</button>
+        <h2 id="checkin-modal-title">Check in realizado com sucesso</h2>
+        <p id="checkin-modal-text"></p>
+      </div>
+    </div>
+
+    <script src="/vendor/html5-qrcode.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

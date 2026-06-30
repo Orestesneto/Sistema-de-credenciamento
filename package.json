@@ -1,0 +1,22 @@
+{
+  "name": "sistema-credenciamento",
+  "version": "1.0.0",
+  "description": "Sistema web simples de credenciamento com cadastro, login e upload de imagem comprimida.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "credenciamento",
+    "cadastro",
+    "upload"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.108.2",
+    "html5-qrcode": "^2.3.8",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.35.2"
+  }
+}
